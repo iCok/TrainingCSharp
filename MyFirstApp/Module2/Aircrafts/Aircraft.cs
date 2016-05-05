@@ -8,7 +8,7 @@ namespace MyFirstApp.Module2.Aircrafts
 {
     class Aircraft:Fly
     {
-        private string name = "Aircraft";
+        public override string name {get { return "Aircraft"; } }
 
         public Aircraft(int capacity, int liftingCapacity)
         {

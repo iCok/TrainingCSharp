@@ -19,7 +19,7 @@ namespace MyFirstApp.Module2
         //Дальность полёта в километрах
         public int flightRange { get; protected set; }
 
-        protected string name;
+        public abstract string name {get;}
 
         public override String ToString()
         {

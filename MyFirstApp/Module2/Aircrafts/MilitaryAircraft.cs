@@ -9,7 +9,7 @@ namespace MyFirstApp.Module2.Aircrafts
 {
     class MilitaryAircraft:Aircraft, IMilitary
     {
-        private string name = "MilitaryAircraft";
+        public override string name { get { return "MilitaryAircraft"; } }
 
         public MilitaryAircraft(int capacity, int liftingCapacity) : base(capacity, liftingCapacity)
         {

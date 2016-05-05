@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Collections;
 
@@ -15,7 +14,8 @@ namespace MyFirstApp.Module2
     {
 
         private delegate bool AcceptCriteria(int value, int minRange, int MaxRange);
-        private delegate bool FilterBy(Fly f, IList<int[]> nameParamToRange, AcceptCriteria accept);
+        private delegate bool FilterBy(Fly f, AcceptCriteria accept, int[] range);
+       
 
         static void Main(string[] args)
         {
@@ -32,33 +32,15 @@ namespace MyFirstApp.Module2
 
             PrintFlyableArray(SortByFlightRange(flies));
 
-            //var acceptCriteries = new AcceptCriteria(AcceptValueInRange);
             AcceptCriteria acceptCriteria = (value, min, max) => value >= min && value <= max;
-            var filterBy = new FilterBy(FilterByAllParameters);
+            FilterBy filterBy = (Fly f, AcceptCriteria accept, int[] range) => accept(f.capacity, range[0], range[1]);
+            filterBy += (Fly f, AcceptCriteria accept, int[] range) => accept(f.liftingCapacity, range[0], range[1]);
+            filterBy += (Fly f, AcceptCriteria accept, int[] range) => accept(f.flightRange, range[0], range[1]);
+               
             
-
-            if (NeedFind()) { FindAirplaneBy(flies, filterBy); };
+            if (NeedFind()) { FindAirplaneBy(flies, filterBy, GetParameters(), acceptCriteria); };
         }
 
-        private bool FilterByAllParameters(Fly f, IList<int[]> rangeList, AcceptCriteria accept)
-        {
-            Boolean isAccept = true;
-            for (int i = 0; i < rangeList.Count; i++)
-            {
-                int[] range = rangeList[i];
-
-                while (isAccept)
-                {
-                    isAccept = accept(f.flightRange, range[0], range[1]);
-                    isAccept = accept(f.capacity, range[0], range[1]);
-                    isAccept = accept(f.liftingCapacity, range[0], range[1]);
-                }
-
-
-            }
-
-
-        }
 
         private int[] GetSomeRangeForParameter()
         {
@@ -78,44 +60,30 @@ namespace MyFirstApp.Module2
         }
 
         
-
-        private bool AcceptValueInRange(int value, int minRange, int maxRange)
-        {
-            if (value >= minRange && value <= maxRange)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        
-
-        private void FindAirplaneBy(Fly[] flies, FilterBy filterBy)
+        private void FindAirplaneBy(Fly[] flies, FilterBy filterBy, IList<int[]> rangeList, AcceptCriteria accept)
         {
             
-           
             Boolean isExist = false;
-
-            
             var resultList = new List<String>();
-            
 
-            foreach (Fly f in flies)
+            for(int i=0; i<flies.Length && i<rangeList.Count;i++)
             {
-               
-                if (AcceptRangeCriteria(valueToRange, filterBy))
+                if (filterBy(flies[i], accept, rangeList[i]))
                 {
-                    resultList.Add(f.ToString());
+                    resultList.Add(flies[i].ToString());
                     isExist = true;
-                    break;
                 }
-
-              
 
             }
 
             if (!isExist) {
                 Console.WriteLine("Did not find any airplanes by your paramaters");
+                Console.ReadLine();
+            }
+            else
+            {
+                resultList.ForEach(s => Console.WriteLine("Found: {0}", s));
+                Console.ReadLine();
             }
         }
 
@@ -126,13 +94,13 @@ namespace MyFirstApp.Module2
             var rangeList = new List<int[]>();
 
             Console.WriteLine("Type a range of values for parameters, e.g. '300-500'");
-            Console.WriteLine("FlightRange=");
-            rangeList.Add(GetSomeRangeForParameter());
-
             Console.WriteLine("PeopleCapacity=");
             rangeList.Add(GetSomeRangeForParameter());
 
             Console.WriteLine("LiftingCapacity=");
+            rangeList.Add(GetSomeRangeForParameter());
+
+            Console.WriteLine("FlightRange=");
             rangeList.Add(GetSomeRangeForParameter());
 
             return rangeList;
@@ -153,12 +121,12 @@ namespace MyFirstApp.Module2
             return false;
         }
 
-        private void PrintFlyableArray(Fly[] flies)
+        public void PrintFlyableArray(Fly[] flies)
         {
             Console.WriteLine("Order by Flight Range: (Min to Max)");
             for (int i = 0; i<flies.Length; i++) 
             {
-                Console.WriteLine(flies[i].ToString());
+                Console.WriteLine(" {0}", flies[i].ToString());
             }
         }
 
@@ -168,7 +136,7 @@ namespace MyFirstApp.Module2
             return flies;
         }
 
-        private int CalculateGeneralLifting(Fly[] flies)
+        public int CalculateGeneralLifting(Fly[] flies)
         {
             int sum = 0;
 
@@ -180,7 +148,7 @@ namespace MyFirstApp.Module2
             return sum;
         }
 
-        private int CalculateGeneralCapacity(Fly[] flies)
+        public int CalculateGeneralCapacity(Fly[] flies)
         {
                int sum = 0;
 
@@ -192,7 +160,7 @@ namespace MyFirstApp.Module2
               return sum;
         }
 
-        private Fly[] CreateFliesArray()
+        public Fly[] CreateFliesArray()
         {
           
             Fly[] flies = new Fly[3];

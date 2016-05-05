@@ -11,7 +11,8 @@ namespace MyFirstApp.Module2.Aircrafts
     {
 
         private int currentWeight { get; set; }
-        protected string name = "TransportAircraft";
+
+        public override string name { get { return "TransportAircraft"; } }
 
         
         public TransportAircraft(int capacity, int liftingCapacity) : base(capacity, liftingCapacity)
