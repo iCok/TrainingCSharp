@@ -15,7 +15,7 @@ namespace MyFirstApp.Module4.Task1
         private const int MAX_ARRAY_SIZE = Int32.MaxValue - 10;
 
         private Object[] elementData;
-        private static readonly Object[] EMPTY_ELEMENTDATA = new Object[]{};
+        private static readonly Object[] EMPTY_ELEMENTDATA = new Object[] { };
 
 
         public DynamicArray(int initialCapacity)
@@ -35,9 +35,10 @@ namespace MyFirstApp.Module4.Task1
             }
         }
 
-        public DynamicArray() : this(10)
+        public DynamicArray()
+            : this(10)
         {
-            
+
         }
 
         public Object[] getElementData()
@@ -110,7 +111,7 @@ namespace MyFirstApp.Module4.Task1
                 }
                 if (i + 1 == modCount) { sb.AppendFormat("{0}]", elementData[i].ToString()); }
                 else { sb.AppendFormat("{0}, ", elementData[i].ToString()); }
-                
+
             }
 
             if (modCount == 0) { sb.Append("]"); }

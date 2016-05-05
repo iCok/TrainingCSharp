@@ -46,6 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MyFirstApp.Module4.Task2.Main5</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,6 +70,9 @@
     <Compile Include="Module2\Interfaces\IFly.cs" />
     <Compile Include="Module2\Interfaces\IMilitary.cs" />
     <Compile Include="Module2\Interfaces\ITransport.cs" />
+    <Compile Include="Module4\Task1\DynamicArray.cs" />
+    <Compile Include="Module4\Task1\Main4.cs" />
+    <Compile Include="Module4\Task2\Main5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
