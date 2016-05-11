@@ -167,6 +167,11 @@ namespace MyFirstApp.Module2
             flies[0] = new Aircraft(200, 150, 1800);
             flies[1] = new MilitaryAircraft(2, 2, 2700);
             flies[2] = new TransportAircraft(700, 300, 6000);
+
+            foreach (var fly in flies)
+            {
+                fly.fly();
+            }
             
             return flies;
         }

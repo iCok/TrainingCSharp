@@ -40,5 +40,10 @@ namespace MyFirstApp.Module2.Aircrafts
             resultWeight = currentWeight;
             return false;
         }
+
+        public override void fly()
+        {
+            Console.WriteLine("I'm transport");
+        }
     }
 }

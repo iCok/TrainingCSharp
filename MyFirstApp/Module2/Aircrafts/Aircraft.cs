@@ -23,5 +23,10 @@ namespace MyFirstApp.Module2.Aircrafts
         {
             this.flightRange = flightRange;
         }
+
+        public override void fly()
+        {
+            Console.WriteLine("I'm aircraft");
+        }
     }
 }
